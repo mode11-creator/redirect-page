@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        // URLパラメータから「text」を取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const text = urlParams.get('text');
+
+        // ショートカットにリダイレクト（textの内容をinputに渡す）
+        if (text) {
+            window.location.href = `shortcuts://run-shortcut?name=英文読み上げ&input=${encodeURIComponent(text)}`;
+        } else {
+            document.write("Invalid text parameter.");
+        }
+    </script>
+    <title>Redirecting...</title>
+</head>
+<body>
+    <p>If you are not redirected, <a id="redirectLink">click here</a>.</p>
+    <script>
+        const text = urlParams.get('text');
+        document.getElementById('redirectLink').href = `shortcuts://run-shortcut?name=英文読み上げ&input=${encodeURIComponent(text)}`;
+    </script>
+</body>
+</html>
