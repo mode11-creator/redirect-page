@@ -7,14 +7,9 @@
         const text = urlParams.get('text');
         const link = urlParams.get('link');  // リンクページのURLも受け取る
 
-        // ショートカットにリダイレクトするリンクを生成
-        const shortcutUrl = `shortcuts://run-shortcut?name=英文読み上げ&input=${encodeURIComponent(text)}&link=${encodeURIComponent(link)}`;
-
-        // ショートカットへのリンクを自動ではなく手動で起動させる
+        // ショートカットにリダイレクト（textとlinkの内容をinputに渡す）
         if (text && link) {
-            document.write(`<p>Text: ${text}</p>`);
-            document.write(`<p>Link: ${link}</p>`);
-            document.write(`<p><a href="${shortcutUrl}">Click here to run the shortcut</a></p>`);
+            window.location.href = `shortcuts://run-shortcut?name=英文読み上げ&input=${encodeURIComponent(text)}&link=${encodeURIComponent(link)}`;
         } else {
             document.write("Invalid parameters.");
         }
@@ -22,11 +17,9 @@
     <title>Redirecting...</title>
 </head>
 <body>
-    <p>If you are not redirected, click the link below:</p>
-    <p><a id="redirectLink">Run Shortcut</a></p>
+    <p>If you are not redirected, <a id="redirectLink">click here</a>.</p>
     <script>
-        // リンクをページに表示
-        document.getElementById('redirectLink').href = shortcutUrl;
+        document.getElementById('redirectLink').href = `shortcuts://run-shortcut?name=英文読み上げ&input=${encodeURIComponent(text)}&link=${encodeURIComponent(link)}`;
     </script>
 </body>
 </html>
