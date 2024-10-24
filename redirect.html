@@ -5,21 +5,18 @@
         // URLパラメータから「text」と「link」を取得
         const urlParams = new URLSearchParams(window.location.search);
         const text = urlParams.get('text');
-        const link = urlParams.get('link');  // リンクページのURLも受け取る
+        const link = urlParams.get('link');
 
-        // ショートカットにリダイレクト（textの内容をinputに渡す）
-        if (text) {
-            window.location.href = `shortcuts://run-shortcut?name=英文読み上げ&input=${encodeURIComponent(text)}&link=${encodeURIComponent(link)}`;
-        } else {
-            document.write("Invalid text parameter.");
-        }
+        // 取得した値をページに表示
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('textValue').textContent = text ? text : 'No text parameter';
+            document.getElementById('linkValue').textContent = link ? link : 'No link parameter';
+        });
     </script>
-    <title>Redirecting...</title>
+    <title>Debugging</title>
 </head>
 <body>
-    <p>If you are not redirected, <a id="redirectLink">click here</a>.</p>
-    <script>
-        document.getElementById('redirectLink').href = `shortcuts://run-shortcut?name=英文読み上げ&input=${encodeURIComponent(text)}&link=${encodeURIComponent(link)}`;
-    </script>
+    <p>Text: <span id="textValue"></span></p>
+    <p>Link: <span id="linkValue"></span></p>
 </body>
 </html>
