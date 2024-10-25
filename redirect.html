@@ -5,32 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting...</title>
     <script>
-        // URLパラメータから「text」と「link」を取得
+        // URLパラメータから「text」を取得（「英文1:リンクページURL」形式で統合されている）
         const urlParams = new URLSearchParams(window.location.search);
-        const text = urlParams.get('text');
-        const link = urlParams.get('link'); // リンクページのURLも取得
+        const text = urlParams.get('text');  // 英文1とリンクページURLが含まれる
 
-        // ショートカットにリダイレクト（textの内容とlinkのURLをinputに渡す）
-        if (text && link) {
-            // リダイレクト先のURLを生成してショートカットを実行
-            const redirectUrl = `shortcuts://run-shortcut?name=英文読み上げ&input=${encodeURIComponent(text)}&link=${encodeURIComponent(link)}`;
-            window.location.href = redirectUrl;
+        // ショートカットにリダイレクト（textの内容をinputに渡す）
+        if (text) {
+            window.location.href = `shortcuts://run-shortcut?name=英文読み上げ&input=${encodeURIComponent(text)}`;
         } else {
-            document.addEventListener('DOMContentLoaded', () => {
-                const resultElement = document.getElementById('result');
-                resultElement.innerHTML = `<p><strong>Error:</strong> Missing 'text' or 'link' parameter.</p>`;
-            });
+            document.write("Error: 'text' parameter is missing.");
         }
     </script>
 </head>
 <body>
-    <!-- デバッグ用に「text」と「link」を表示 -->
-    <div id="result">Redirecting...</div>
-
+    <!-- リダイレクトが機能しない場合のリンク -->
     <p>If you are not redirected, <a id="redirectLink">click here</a>.</p>
     <script>
-        // リダイレクト用のリンクを作成（デバッグ用）
-        const redirectUrl = `shortcuts://run-shortcut?name=英文読み上げ&input=${encodeURIComponent(text)}&link=${encodeURIComponent(link)}`;
+        // ショートカットのリダイレクトリンクを設定
+        const redirectUrl = `shortcuts://run-shortcut?name=英文読み上げ&input=${encodeURIComponent(text)}`;
         document.getElementById('redirectLink').href = redirectUrl;
     </script>
 </body>
