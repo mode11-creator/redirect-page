@@ -23,6 +23,9 @@
                     <p><strong>Link:</strong> ${link}</p>
                     <p><strong>Redirect URL:</strong> ${redirectUrl}</p>
                 `;
+
+                // 自動的にショートカットにリダイレクト
+                window.location.href = redirectUrl;
             }
         });
     </script>
