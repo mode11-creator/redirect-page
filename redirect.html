@@ -7,6 +7,18 @@
         const text = urlParams.get('text');
         const link = urlParams.get('link');  // リンクページのURLも受け取る
 
+        // ページに「text」と「link」とリダイレクトURLを表示させる
+        document.addEventListener('DOMContentLoaded', () => {
+            const resultElement = document.getElementById('result');
+            const redirectUrl = `shortcuts://run-shortcut?name=英文読み上げ&input=${encodeURIComponent(text)}&link=${encodeURIComponent(link)}`;
+
+            resultElement.innerHTML = `
+                <p><strong>Text:</strong> ${text || 'No text provided'}</p>
+                <p><strong>Link:</strong> ${link || 'No link provided'}</p>
+                <p><strong>Redirect URL:</strong> ${redirectUrl}</p>
+            `;
+        });
+
         // ショートカットにリダイレクトするURLを生成
         if (text && link) {
             const redirectUrl = `shortcuts://run-shortcut?name=英文読み上げ&input=${encodeURIComponent(text)}&link=${encodeURIComponent(link)}`;
@@ -18,6 +30,9 @@
     <title>Redirecting...</title>
 </head>
 <body>
+    <!-- デバッグ用に「text」と「link」およびリダイレクトURLを表示 -->
+    <div id="result"></div>
+
     <p>If you are not redirected, <a id="redirectLink">click here</a>.</p>
     <script>
         const redirectUrl = `shortcuts://run-shortcut?name=英文読み上げ&input=${encodeURIComponent(text)}&link=${encodeURIComponent(link)}`;
