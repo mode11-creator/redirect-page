@@ -1,44 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
     <script>
         // URLパラメータから「text」と「link」を取得
         const urlParams = new URLSearchParams(window.location.search);
         const text = urlParams.get('text');
-        const link = urlParams.get('link');  // リンクページのURLも受け取る
+        const link = urlParams.get('link'); // リンクページのURLも取得
 
-        // ページに「text」と「link」とリダイレクトURLを表示させる
-        document.addEventListener('DOMContentLoaded', () => {
-            const resultElement = document.getElementById('result');
-
-            // text や link が取得できていない場合はエラーを表示
-            if (!text || !link) {
+        // ショートカットにリダイレクト（textの内容とlinkのURLをinputに渡す）
+        if (text && link) {
+            // リダイレクト先のURLを生成してショートカットを実行
+            const redirectUrl = `shortcuts://run-shortcut?name=英文読み上げ&input=${encodeURIComponent(text)}&link=${encodeURIComponent(link)}`;
+            window.location.href = redirectUrl;
+        } else {
+            document.addEventListener('DOMContentLoaded', () => {
+                const resultElement = document.getElementById('result');
                 resultElement.innerHTML = `<p><strong>Error:</strong> Missing 'text' or 'link' parameter.</p>`;
-            } else {
-                const redirectUrl = `shortcuts://run-shortcut?name=英文読み上げ&input=${encodeURIComponent(text)}&link=${encodeURIComponent(link)}`;
-                
-                // 正常にURLパラメータが取得できていればその内容を表示
-                resultElement.innerHTML = `
-                    <p><strong>Text:</strong> ${text}</p>
-                    <p><strong>Link:</strong> ${link}</p>
-                    <p><strong>Redirect URL:</strong> ${redirectUrl}</p>
-                `;
-
-                // 自動的にショートカットにリダイレクト
-                window.location.href = redirectUrl;
-            }
-        });
+            });
+        }
     </script>
-    <title>Redirecting...</title>
 </head>
 <body>
-    <!-- デバッグ用に「text」と「link」およびリダイレクトURLを表示 -->
-    <div id="result">Loading...</div>
+    <!-- デバッグ用に「text」と「link」を表示 -->
+    <div id="result">Redirecting...</div>
 
     <p>If you are not redirected, <a id="redirectLink">click here</a>.</p>
     <script>
+        // リダイレクト用のリンクを作成（デバッグ用）
         const redirectUrl = `shortcuts://run-shortcut?name=英文読み上げ&input=${encodeURIComponent(text)}&link=${encodeURIComponent(link)}`;
-        document.getElementById('redirectLink').href = redirectUrl;  // URLをリンクに設定
+        document.getElementById('redirectLink').href = redirectUrl;
     </script>
 </body>
 </html>
